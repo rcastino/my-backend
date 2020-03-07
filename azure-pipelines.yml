@@ -29,7 +29,7 @@
 
 variables:
   NODE_VERSION: '10.14.2'
-  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn2
 
 # This pipeline can be manually run or is automatically triggered whenever one 
 # of the following conditions is true:
