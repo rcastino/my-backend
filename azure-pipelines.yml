@@ -110,7 +110,9 @@ stages:
 
 
   # B) Run unit tests (always run)
-  - stage: Test    
+  - stage: Test
+    pool:
+      vmImage: 'ubuntu-latest'
     dependsOn: []
     jobs:
       - job: unit_tests
@@ -124,9 +126,11 @@ stages:
           parameters:
             make: build-noemit
 
-          # Generate test certificates and run unit tests with example env variables
-        - script: |        
-            yarn generate:test-certs  
+        - script: |
+            yarn generate:test-certs
+          displayName: 'Generate test certificates'
+
+        - script: |
             yarn test:coverage
           displayName: 'Unit tests exec'
 
