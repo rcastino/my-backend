@@ -49,43 +49,11 @@ trigger:
 # in the package.json file. Since we are deploying on Azure Web app on Windows
 # runtime, the pipeline is currently configured to use a Windows hosted image.
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'windows-2019'
 
 stages:
-  - stage: MyTest
-    dependsOn: []
-    jobs:
-      # A1) Checkout, install module and build code
-      - job: myjob
-        steps:
-        - checkout: self
-          persistCredentials: true
-
-        - task: UseNode@1
-          inputs:
-            version: $(NODE_VERSION)
-          displayName: 'Set up Node.js'
-          
-        - bash: |
-            ./scripts/init-npm.sh
-            cat .npmrc
-            echo 'AAAAAA'
-            npm config list
-          env:
-            GITHUB_TOKEN: $(GITHUB_TOKEN)    
-          displayName: 'Init .npmrc file'
-          
-        - bash: |
-            yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
-          displayName: 'Install yarn dependencies'
-
-
-
-
-
   # A) Build and code validation (always run)
   - stage: Build
-    condition: false
     dependsOn: []
     jobs:
       # A1) Checkout, install module and build code
@@ -103,7 +71,6 @@ stages:
             make: install_dependencies
 
         - script: |
-            node -v
             yarn lint
           displayName: 'Lint'
 
@@ -143,9 +110,7 @@ stages:
 
 
   # B) Run unit tests (always run)
-  - stage: Test
-    condition: false
-    
+  - stage: Test    
     dependsOn: []
     jobs:
       - job: unit_tests
