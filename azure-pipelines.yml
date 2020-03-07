@@ -71,7 +71,7 @@ stages:
             make: install_dependencies
 
         - script: |
-            yarn lint
+            yarn lint-autofix
           displayName: 'Lint'
 
       # A3) Validate API definitions
