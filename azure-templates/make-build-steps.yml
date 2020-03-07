@@ -34,12 +34,7 @@ steps:
   displayName: 'Set up Node.js'
   
 - bash: |
-    npm config list
-    echo 'BBBBB'
     ./scripts/init-npm.sh
-    cat .npmrc
-    echo 'AAAAAA'
-    npm config list
   env:
     GITHUB_TOKEN: $(GITHUB_TOKEN)    
   displayName: 'Init .npmrc file'
