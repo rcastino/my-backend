@@ -76,12 +76,6 @@ stages:
           displayName: 'Set up Node.js'
           
         - bash: |
-            #echo registry=https://registry.npmjs.com/ >> .npmrc
-            #echo \//npm.pkg.github.com/:_authToken=$CICCIO >> .npmrc
-            #echo \@pagopa:registry=https://npm.pkg.github.com/ >> .npmrc
-            
-            #npm config list
-            echo 'BBBBB'
             ./scripts/init-npm.sh
             cat .npmrc
             echo 'AAAAAA'
@@ -91,9 +85,7 @@ stages:
           displayName: 'Init .npmrc file'
           
         - bash: |
-            npm install 
-          env:
-            GITHUB_TOKEN: $(System.AccessToken) 
+            yarn install --frozen-lockfile --no-progress --non-interactive --network-concurrency 1
           displayName: 'Install yarn dependencies'
 
 
