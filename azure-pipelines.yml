@@ -47,17 +47,21 @@ trigger:
 # This pipeline has been implemented to be run on hosted agent pools based both
 # on 'windows' and 'ubuntu' virtual machine images and using the scripts defined
 # in the package.json file. Since we are deploying on Azure Web app on Windows
-# runtime, the pipeline is currently configured to use a Windows hosted image.
+# runtime, the pipeline is currently configured to use a Windows hosted image for
+# verifying the build and building the artifacts to be deployed and Linux OS for 
+# all other jobs.
 pool:
-  vmImage: 'windows-2019'
+  vmImage: 'ubuntu-latest'
 
 stages:
   # A) Build and code validation (always run)
   - stage: Build
     dependsOn: []
     jobs:
-      # A1) Checkout, install module and build code
-      - job: make_build      
+      # A1) Checkout, install module and build code (in Windows OS)
+      - job: make_build
+        pool:
+          vmImage: 'windows-2019'
         steps:
         - template: azure-templates/make-build-steps.yml
           parameters:
@@ -65,8 +69,6 @@ stages:
             
       # A2) Analyze source code to find errors with lint
       - job: lint
-        pool:
-          vmImage: 'ubuntu-latest'
         steps:
         - template: azure-templates/make-build-steps.yml
           parameters:
@@ -111,10 +113,8 @@ stages:
           displayName: 'Danger CI'
 
 
-  # B) Run unit tests (always run)
+  # B) Run unit tests (use Linux OS)
   - stage: Test
-    pool:
-      vmImage: 'ubuntu-latest'
     dependsOn: []
     jobs:
       - job: unit_tests
@@ -153,6 +153,8 @@ stages:
   #   b) $STAGING_DEPLOY_MODE == 'deploy_to_slots': deploy to 'staging' slot and
   #      then swap 'staging' slot with 'production' slot
   - stage: Deploy_staging
+    pool:
+      vmImage: 'windows-2019'
     condition: 
       and(
         succeeded(),
@@ -209,6 +211,8 @@ stages:
   #   b) $PRODUCTION_DEPLOY_MODE == 'deploy_to_slots': deploy to 'staging' slot and
   #      then swap 'staging' slot with 'production' slot
   - stage: Deploy_production
+    pool:
+      vmImage: 'windows-2019'
     condition: 
       and(
         succeeded(),
