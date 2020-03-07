@@ -87,7 +87,7 @@ stages:
             echo 'AAAAAA'
             npm config list
           env:
-            GITHUB_TOKEN: $(System.AccessToken)    
+            GITHUB_TOKEN: $(GITHUB_TOKEN)    
           displayName: 'Init .npmrc file'
           
         - bash: |
