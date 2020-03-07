@@ -29,7 +29,7 @@
 
 variables:
   NODE_VERSION: '10.14.2'
-  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn2
+  YARN_CACHE_FOLDER: $(Pipeline.Workspace)/.yarn
 
 # This pipeline can be manually run or is automatically triggered whenever one 
 # of the following conditions is true:
@@ -60,15 +60,6 @@ stages:
         steps:
         - checkout: self
           persistCredentials: true
-
-        - task: Cache@2
-          inputs:
-            key: 'yarn | "$(Agent.OS)" | yarn.lock'
-            restoreKeys: |
-              yarn | "$(Agent.OS)"
-              yarn
-            path: $(YARN_CACHE_FOLDER)
-          displayName: Cache yarn packages
 
         - task: UseNode@1
           inputs:
