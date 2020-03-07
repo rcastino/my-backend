@@ -15,8 +15,8 @@
     "node": "10.14.2"
   },
   "scripts": {
-    "build": "generate:proxy-models && tsc",
-    "build-noemit": "generate:proxy-models && tsc --noEmit",
+    "build": "yarn generate:proxy-models && tsc",
+    "build-noemit": "yarn generate:proxy-models && tsc --noEmit",
     "hot-reload": "nodemon src/server.js",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
