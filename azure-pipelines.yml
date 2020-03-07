@@ -65,13 +65,15 @@ stages:
             
       # A2) Analyze source code to find errors with lint
       - job: lint
+        pool:
+          vmImage: 'ubuntu-latest'
         steps:
         - template: azure-templates/make-build-steps.yml
           parameters:
             make: install_dependencies
 
         - script: |
-            yarn lint-autofix
+            yarn lint
           displayName: 'Lint'
 
       # A3) Validate API definitions
