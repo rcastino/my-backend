@@ -19,12 +19,12 @@
 # - STAGING_DEPLOY_MODE: 'deploy_standard' || 'deploy_to_slots'
 # - STAGING_AZURE_SUBSCRIPTION
 # - STAGING_RESOURCE_GROUP_NAME
-# - STAGING_WEB_APP_NAME
+# - STAGING_APP_NAME
 # 
 # - PRODUCTION_DEPLOY_MODE: 'deploy_standard' || 'deploy_to_slots'
 # - PRODUCTION_AZURE_SUBSCRIPTION
 # - PRODUCTION_RESOURCE_GROUP_NAME
-# - PRODUCTION_WEB_APP_NAME
+# - PRODUCTION_APP_NAME
 #
 
 variables:
@@ -58,7 +58,7 @@ stages:
   - stage: Build
     dependsOn: []
     jobs:
-      # A1) Checkout, install module and build code (in Windows OS)
+      # A1) Checkout, install module and build code (use Windows OS)
       - job: make_build
         pool:
           vmImage: 'windows-2019'
@@ -88,7 +88,6 @@ stages:
 
         - bash: |
             yarn add oval
-            echo 'Check APIs'
             npx oval validate -p api_notifications.yaml
             npx oval validate -p api_pagopa.yaml
             npx oval validate -p api_backend.yaml
@@ -119,11 +118,6 @@ stages:
     jobs:
       - job: unit_tests
         steps:
-        - task: UseNode@1
-          inputs:
-            version: $(NODE_VERSION)
-          displayName: 'Set up Node.js'
-
         - template: azure-templates/make-build-steps.yml
           parameters:
             make: build-noemit
@@ -141,7 +135,7 @@ stages:
           displayName: 'Code coverage'
 
 
-  # C) Deploy to STAGE environment if the following conditions apply:
+  # C) Deploy to STAGE environment if the following conditions apply (use Windows OS):
   #    - continuos deployment (automatic):
   #       - $DO_DEPLOY == true and
   #       - there is a push on 'master' branch 
@@ -185,7 +179,7 @@ stages:
             deployType: 'deployToProductionSlot'
             azureSubscription: '$(STAGING_AZURE_SUBSCRIPTION)'
             resourceGroupName: '$(STAGING_RESOURCE_GROUP_NAME)'
-            appName: '$(STAGING_WEB_APP_NAME)'
+            appName: '$(STAGING_APP_NAME)'
 
       # Option 2: deploy to staging slot and then swap with 'production' slot
       - job: deploy_to_slots
@@ -196,10 +190,10 @@ stages:
             deployType: 'deployToStagingSlotAndSwap'
             azureSubscription: '$(STAGING_AZURE_SUBSCRIPTION)'
             resourceGroupName: '$(STAGING_RESOURCE_GROUP_NAME)'
-            appName: '$(STAGING_WEB_APP_NAME)'
+            appName: '$(STAGING_APP_NAME)'
 
 
-  # D) Deploy to PRODUCTION environment if one of the following conditions apply:
+  # D) Deploy to PRODUCTION environment if the following conditions apply (use Windows OS):
   #    - continuos deployment (automatic):
   #       - $DO_DEPLOY == true and
   #       - the 'latest' tag is pushed 
@@ -243,7 +237,7 @@ stages:
             deployType: 'deployToProductionSlot'
             azureSubscription: '$(PRODUCTION_AZURE_SUBSCRIPTION)'
             resourceGroupName: '$(PRODUCTION_RESOURCE_GROUP_NAME)'
-            appName: '$(PRODUCTION_WEB_APP_NAME)'
+            appName: '$(PRODUCTION_APP_NAME)'
 
       # Option 2: deploy to staging slot and then swap with 'production' slot
       - job: deploy_to_slots
@@ -254,5 +248,5 @@ stages:
             deployType: 'deployToStagingSlotAndSwap'
             azureSubscription: '$(PRODUCTION_AZURE_SUBSCRIPTION)'
             resourceGroupName: '$(PRODUCTION_RESOURCE_GROUP_NAME)'
-            appName: '$(PRODUCTION_WEB_APP_NAME)'
+            appName: '$(PRODUCTION_APP_NAME)'
 
