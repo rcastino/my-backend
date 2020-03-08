@@ -46,10 +46,13 @@ steps:
       !**/*.ts
       !azure-templates/**/*
       !azure-pipelines.yml
-      !README.md
+      !*.md
+      !docker-compose.yml
+      !Dangerfile.ts
       !jest.config.js
       !local.settings.json
       !test
+      !tslint.json
       !tsconfig.json
   displayName: 'Copy deploy files'
 
