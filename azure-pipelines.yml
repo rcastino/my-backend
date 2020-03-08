@@ -48,8 +48,7 @@ trigger:
 # on 'windows' and 'ubuntu' virtual machine images and using the scripts defined
 # in the package.json file. Since we are deploying on Azure Web app on Windows
 # runtime, the pipeline is currently configured to use a Windows hosted image for
-# verifying the build and building the artifacts to be deployed and Linux OS for 
-# all other jobs.
+# verifying the build and deploying, and Linux OS for all other jobs.
 pool:
   vmImage: 'ubuntu-latest'
 
