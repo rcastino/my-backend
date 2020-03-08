@@ -39,7 +39,7 @@ steps:
       **/*
       !.git/**/*
       !.vscode/**/*
-      !^[.]
+      ![.]*
       !certs/**/*
       !scripts/**/*
       !**/*.js.map
