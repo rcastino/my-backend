@@ -87,7 +87,7 @@ stages:
           displayName: 'Set up Node.js'
 
         - bash: |
-            yarn add oval
+            yarn add oval --dev
             npx oval validate -p api_notifications.yaml
             npx oval validate -p api_pagopa.yaml
             npx oval validate -p api_backend.yaml
