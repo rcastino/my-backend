@@ -15,8 +15,8 @@
     "node": "10.14.2"
   },
   "scripts": {
-    "build": "yarn generate:proxy-models && tsc",
-    "build-noemit": "yarn generate:proxy-models && tsc --noEmit",
+    "build": "yarn tsc",
+    "build-noemit": "yarn tsc --noEmit",
     "hot-reload": "nodemon src/server.js",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
@@ -34,7 +34,7 @@
     "generate:test-certs": "./scripts/generate-test-certs.sh certs",
     "postversion": "git push && git push --tags",
     "dist:modules": "modclean -r -n default:safe && npm prune --production",
-    "predeploy": "npm-run-all build dist:modules"
+    "predeploy": "npm-run-all generate:proxy-models build dist:modules"
   },
   "repository": {
     "type": "git",
