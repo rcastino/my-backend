@@ -38,13 +38,14 @@ steps:
     Contents: |
       **/*
       !.git/**/*
+      !.vscode/**/*
+      !^\.
+      !certs/**/*
+      !scripts/**/*
       !**/*.js.map
       !**/*.ts
-      !.vscode/**/*
       !azure-templates/**/*
       !azure-pipelines.yml
-      !.prettierrc
-      !.gitignore
       !README.md
       !jest.config.js
       !local.settings.json
