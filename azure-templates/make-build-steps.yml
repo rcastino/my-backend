@@ -44,13 +44,18 @@ steps:
   displayName: 'Install yarn dependencies'
 
 - ${{ if eq(parameters.make, 'build') }}:
-  - bash: yarn build
+  - bash: |
+      yarn generate:proxy-models
+      yarn build
     displayName: 'Build code'
 
 - ${{ if eq(parameters.make, 'build-noemit') }}:
-  - bash: yarn build-noemit
+  - bash: |
+      yarn generate:proxy-models
+      yarn build-noemit
     displayName: 'Build-noemit code'
 
 - ${{ if eq(parameters.make, 'predeploy_build') }}:
-  - bash: yarn predeploy
+  - bash: |
+      yarn predeploy
     displayName: 'Predeploy build code'
