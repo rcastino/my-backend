@@ -15,8 +15,8 @@
     "node": "10.14.2"
   },
   "scripts": {
-    "build": "yarn tsc",
-    "build-noemit": "yarn tsc --noEmit",
+    "build": "tsc",
+    "build-noemit": "tsc --noEmit",
     "hot-reload": "nodemon src/server.js",
     "lint": "tslint -p . -c tslint.json -t verbose",
     "lint-autofix": "tslint -p . -c tslint.json -t verbose --fix",
