@@ -66,6 +66,10 @@ stages:
               dockerVersion: 17.09.0-ce
               releaseType: stable
 
+          - script: |
+              docker run -p 6379:6379 --rm --name redis redis
+            displayName: 'Start redis'
+
 
 
   # A) Build and code validation (always run)
