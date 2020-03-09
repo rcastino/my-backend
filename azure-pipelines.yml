@@ -54,8 +54,23 @@ pool:
   vmImage: 'ubuntu-latest'
 
 stages:
+  - stage: Rai
+    dependsOn: []
+    jobs:
+      # A1) TODO
+      - job: rai_build
+        steps:
+          - task: DockerInstaller@0
+            displayName: Docker Installer
+            inputs:
+              dockerVersion: 17.09.0-ce
+              releaseType: stable
+
+
+
   # A) Build and code validation (always run)
   - stage: Build
+    condition: false
     dependsOn: []
     jobs:
       # A1) Checkout, install module and build code (use Windows OS)
@@ -114,6 +129,7 @@ stages:
 
   # B) Run unit tests (use Linux OS, also required to generate certificates)
   - stage: Test
+    condition: false
     dependsOn: []
     jobs:
       - job: unit_tests
