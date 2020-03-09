@@ -60,6 +60,12 @@ stages:
       # A1) TODO
       - job: rai_build
         steps:
+          - bash: 
+          - task: UseNode@1
+            inputs:
+              version: 8.9.4
+            displayName: 'Set up Node.js'
+            
           - task: DockerInstaller@0
             displayName: Docker Installer
             inputs:
@@ -68,8 +74,12 @@ stages:
 
           - script: |
               docker run -d -p 6379:6379 --name redis redis
+              exec 3<>/dev/tcp/127.0.0.1/6379 && echo -e "PING\r\n" >&3 && head -c 7 <&3
             displayName: 'Start redis'
 
+          - script: |
+              exec 3<>/dev/tcp/127.0.0.1/6379 && echo -e "PING\r\n" >&3 && head -c 7 <&3
+            displayName: 'PING'
 
 
   # A) Build and code validation (always run)
