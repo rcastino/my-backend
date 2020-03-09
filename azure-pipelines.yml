@@ -67,7 +67,7 @@ stages:
               releaseType: stable
 
           - script: |
-              docker run -p 6379:6379 --rm --name redis redis
+              docker run -d -p 6379:6379 --name redis redis
             displayName: 'Start redis'
 
 
