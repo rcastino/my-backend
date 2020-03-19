@@ -84,7 +84,6 @@ stages:
 
   # A) Build and code validation (always run)
   - stage: Build
-    condition: false
     dependsOn: []
     jobs:
       # A1) Checkout, install module and build code (use Windows OS)
