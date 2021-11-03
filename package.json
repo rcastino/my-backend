@@ -72,7 +72,7 @@
     "redis-clustr": "^1.6.0",
     "request-ip": "^2.1.1",
     "ulid": "^2.2.2",
-    "validator": "^10.8.0",
+    "validator": "^13.7.0",
     "winston": "^3.0.0",
     "xmldom": "^0.1.27"
   },
